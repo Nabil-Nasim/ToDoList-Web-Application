@@ -1,0 +1,46 @@
+
+<%- include("headers") -%>
+
+<div class="box" id="heading">
+  <h1><%= ListTitle %></h1>
+</div>
+
+<div class="box">
+  <% for (var i = 0; i < newlistitems.length; i++) { %>
+    <div class="item">
+      <div class="bullet-point">
+        <i class="fas fa-circle"></i>
+      </div>
+      <div class="task-name">
+        <p><%= newlistitems[i] %></p>
+      </div>
+      <div class="delete-button">
+        <form class="delete-form" action="/delete" method="post">
+          <input type="hidden" name="itemIndex" value="<%= i %>">
+          <button type="submit" class="garbage-icon">🗑️</button>
+        </form>
+      </div>
+    </div>
+  <% } %>
+
+  <form class="item" action="/" method="post">
+    <input type="text" name="newitem" placeholder="New Item" autocomplete="off">
+    <button type="submit" class="Add-button" name="List" value="<%= ListTitle %>">+</button>
+  </form>
+  <div class="pending-tasks">
+    <h2>You have <%= newlistitems.length %> <%= newlistitems.length === 1 ? 'task' : 'tasks' %> pending.</h2>
+  </div>
+</div>
+
+<script>
+  function validateForm(form) {
+    const newItemInput = form.elements.newitem;
+    if (newItemInput.value.trim() === "") {
+      alert("Task can't be empty");
+      newItemInput.focus();
+      return false;
+    }
+    return true;
+  }
+</script>
+<%- include("footers") -%>
